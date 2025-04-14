@@ -55,6 +55,10 @@ export default function Posts() {
 
   return (
     <div >
+      <div>
+  This works<br></br>
+  Loading is {loading ? 'true' : 'false'}
+</div>
       {initialLoad && loading ? (
         <div className="d-flex justify-content-center align-items-center py-5 my-5 w-100">
           <div className="text-center">
