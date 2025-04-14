@@ -5,32 +5,40 @@ import logo from './images/logo.png'
 
 
 
-const reset = () => {
-  const categoryData = JSON.parse(localStorage.getItem("categoryEngagement")) || {};
-
-  // Reset all values to 0
-  const resetData = {};
-  for (const category in categoryData) {
-    resetData[category] = 0;
-  }
-
-  // If no data existed before, initialize defaults
-  if (Object.keys(resetData).length === 0) {
+const reset = () => {  // Remove async (not needed)
+  try {
+    const categoryData = JSON.parse(localStorage.getItem("categoryEngagement")) || {};
     const defaultCategories = [
       "Technology",
       "Health & Wellness",
-      "Education & Learning",
-      "Lifestyle & Productivity",
-      "Entertainment & Pop Culture",
-      "General"
+      // ... other categories ...
     ];
-    defaultCategories.forEach(category => {
+
+    // Reset existing categories or initialize defaults
+    const resetData = {};
+    const categoriesToReset = Object.keys(categoryData).length > 0 
+      ? Object.keys(categoryData) 
+      : defaultCategories;
+
+    categoriesToReset.forEach(category => {
       resetData[category] = 0;
     });
-  }
 
-  localStorage.setItem("categoryEngagement", JSON.stringify(resetData));
-  alert("done");
+    localStorage.setItem("categoryEngagement", JSON.stringify(resetData)); // No await
+    return { success: true, message: "Reset successful!" };
+  } catch (error) {
+    console.error("Reset failed:", error);
+    return { success: false, message: "Reset failed!" };
+  }
+};
+
+// Click handler
+const handleResetClick = () => {
+  const result = reset(); // No await needed
+  alert(result.message); // Show feedback
+  
+  // Optional: Refresh the page or update UI
+  // window.location.reload(); 
 };
 
 
@@ -64,7 +72,7 @@ export default function Navbar() {
         <div onClick={show}>
           <img src={logo} alt="Logo" style={{ height: '10vh' }} />
         </div>
-        {showResetButton && (<button className="btn btn-outline-danger" onClick={reset}>
+        {showResetButton && (<button className="btn btn-outline-danger" onClick={handleResetClick}>
           <i className="bi bi-arrow-counterclockwise"></i>
         </button>)}
       </div>

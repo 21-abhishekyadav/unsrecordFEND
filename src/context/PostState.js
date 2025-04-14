@@ -40,7 +40,7 @@ export default function NoteState(props) {
                 });
               
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-              
+              console.log("deployed : " ,category);
                 const json = await response.json();
                 allPosts = [...allPosts, ...json];
               }
