@@ -34,7 +34,7 @@ export default function Login() {
             console.log("success")
             //save authtoken
             localStorage.setItem('token',json.authtoken);
-            navigate("/");
+            navigate("/home");
 
         }
         else{
