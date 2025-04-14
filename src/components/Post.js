@@ -8,20 +8,17 @@ export default function Posts() {
   const { posts, getpost } = useContext(postContext);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const [initialLoad, setInitialLoad] = useState(true);
 
   // Initial load
   useEffect(() => {   
     const fetchInitialPosts = async () => {
       console.log("fetching");
       setLoading(true);
-
-      await new Promise(resolve => setTimeout(resolve, 0));
-      await getpost(1, true).then(() => console.log(posts));
-
+      await getpost(1, true);  // Reset posts for initial load
       console.log("fetched");
       setLoading(false);
-
+      setInitialLoad(false);
     };
     fetchInitialPosts();
   }, []);
@@ -40,7 +37,7 @@ export default function Posts() {
 
   // Load more function
   const loadMore = async () => {
-    console.log("loading more");
+    console.log("loading");
     setLoading(true);
     try {
       await getpost(page + 1, false);  // Don't reset posts for subsequent loads
@@ -49,22 +46,14 @@ export default function Posts() {
       console.error("Error loading more posts:", error);
     } finally {
       setLoading(false);
-      console.log("loaded more");
-
     }
   };
 
   // ... (rest of your code remains the same)
 
   return (
-    <div >
-      <div>
-  This works<br></br>
-  Loading is {loading ? 'true' : 'false'}
-  {posts.map((post) => <Displaypost key={post._id} post={post} />)}
-
-</div>
-      {loading ? (
+    <div className='row masonry-grid' style={{ marginLeft: "-10px", width: "80vw" }}>
+      {initialLoad && loading ? (
         <div className="d-flex justify-content-center align-items-center py-5 my-5 w-100">
           <div className="text-center">
             <div className="spinner-border text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
@@ -75,8 +64,8 @@ export default function Posts() {
         </div>
       ) : (
         <>
-          {/* {posts.map((post) => <Displaypost key={post._id} post={post} />)}
-           */}
+          {posts.map((post) => <Displaypost key={post._id} post={post} />)}
+          
           {posts.length > 0 && (
             <div className="text-center mt-4">
               <button 

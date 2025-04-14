@@ -7,7 +7,14 @@ export default function NoteState(props) {
     
  
     const [posts, setPosts] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
+    const defaultCategories = [
+        "Technology",
+        "Health & Wellness",
+        "Education & Learning",
+        "Lifestyle & Productivity",
+        "Entertainment & Pop Culture",
+        "General"
+      ];
     
 
     //something  
@@ -15,27 +22,31 @@ export default function NoteState(props) {
     const getpost = async (page = 1, reset = false) => {
         try {
             const categoryData = JSON.parse(localStorage.getItem("categoryEngagement")) || {};
+            const categoriesToUse = Object.keys(categoryData).length ? 
+                Object.entries(categoryData)
+                .sort(([, a], [, b]) => b - a)
+                .map(([category]) => category)
+            : defaultCategories;
             let totalEngagement = Object.values(categoryData).reduce((sum, count) => sum + count, 0) || 1;
             let allPosts = [];
-    
-            // Sort categories by engagement count (descending order)
-            const sortedCategories = Object.entries(categoryData)
-                .sort(([, a], [, b]) => b - a) // Sort by highest engagement first
-                .map(([category]) => category);
-    
-            for (const category of sortedCategories) {
-                let categoryLimit = Math.round((categoryData[category] / totalEngagement) * 10) || 1; // Distribute 10 posts
-    
+
+            for (const category of categoriesToUse) {
+                let categoryLimit = categoryData[category]
+                  ? Math.round((categoryData[category] / totalEngagement) * 10)
+                  : 1;
+              
                 const response = await fetch(`${host}/posts?page=${page}&limit=${categoryLimit}&category=${encodeURIComponent(category)}`, {
-                    method: "GET",
-                    headers: { 'Content-Type': 'application/json' },
+                  method: "GET",
+                  headers: { 'Content-Type': 'application/json' },
                 });
-    
+              
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    
+              
                 const json = await response.json();
-                allPosts = [...allPosts, ...json]; // Append posts from each category
-            }
+                allPosts = [...allPosts, ...json];
+              }
+
+            
     
             setPosts(prevPosts => {
                 const newPosts = reset ? allPosts : [...prevPosts, ...allPosts];

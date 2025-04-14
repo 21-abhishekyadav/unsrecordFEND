@@ -135,7 +135,7 @@ export default function Displayposts(props) {
     const col = ["info", "warning", "primary", "success", "danger", "secondary"]
     return (
 
-        <div className='col-md-4 '>
+        <div className='col-md-4 masonry-item' style={masonryItemStyle} >
             <div className={`  my-3 p-3 bg-${col[Math.floor(Math.random() * 6)]} bg-opacity-10   rounded-end cursor-pointer `}
                 style={{
                     width: "100%",
