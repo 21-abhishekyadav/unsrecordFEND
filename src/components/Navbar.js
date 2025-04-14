@@ -8,25 +8,26 @@ import logo from './images/logo.png'
 const reset = () => {  // Remove async (not needed)
   try {
     const categoryData = JSON.parse(localStorage.getItem("categoryEngagement")) || {};
+    const resetData = {};
     const defaultCategories = [
       "Technology",
-      "Health & Wellness",
-      // ... other categories ...
+        "Health & Wellness",
+        "Education & Learning",
+        "Lifestyle & Productivity",
+        "Entertainment & Pop Culture",
+        "General"
     ];
 
-    // Reset existing categories or initialize defaults
-    const resetData = {};
-    const categoriesToReset = Object.keys(categoryData).length > 0 
-      ? Object.keys(categoryData) 
-      : defaultCategories;
-
-    categoriesToReset.forEach(category => {
+    defaultCategories.forEach(category => {
       resetData[category] = 0;
     });
 
-    localStorage.setItem("categoryEngagement", JSON.stringify(resetData)); // No await
-    return { success: true, message: "Reset successful!" };
-  } catch (error) {
+  localStorage.setItem("categoryEngagement", JSON.stringify(resetData));
+ 
+  return { success: true, message: "Reset successful!" };
+  }
+
+   catch (error) {
     console.error("Reset failed:", error);
     return { success: false, message: "Reset failed!" };
   }
