@@ -54,7 +54,7 @@ export default function Posts() {
   // ... (rest of your code remains the same)
 
   return (
-    <div className='row masonry-grid' style={{ marginLeft: "-10px", width: "80vw" }}>
+    <div >
       {initialLoad && loading ? (
         <div className="d-flex justify-content-center align-items-center py-5 my-5 w-100">
           <div className="text-center">
