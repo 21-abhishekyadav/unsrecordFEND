@@ -17,7 +17,7 @@ export default function Posts() {
       setLoading(true);
 
       await new Promise(resolve => setTimeout(resolve, 0));
-      await getpost(1, true).then(() => console.log("getpost resolved"));
+      await getpost(1, true).then(() => console.log(posts));
 
       console.log("fetched");
       setLoading(false);
