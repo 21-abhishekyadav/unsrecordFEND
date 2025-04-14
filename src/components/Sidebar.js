@@ -8,7 +8,7 @@ export default function Sidebar() {
 
   const handleclick = () => {
     localStorage.removeItem('token');
-    navigate("/signup");
+    navigate("/");
     alert("logged out successfully")
   }
 
@@ -45,7 +45,7 @@ export default function Sidebar() {
               }}>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">         
-                <Link  className="bi bi-postcard-heart-fill fs-2 text-decoration-none" aria-current="page" to="/posts" style={{
+                <Link  className="bi bi-postcard-heart-fill fs-2 text-decoration-none" aria-current="page" to="/" style={{
                  
                   color: 'white',
                 }}>   Posts </Link>
@@ -84,7 +84,7 @@ export default function Sidebar() {
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li>         
-                <Link  className="bi bi-postcard-heart-fill fs-2 text-decoration-none" aria-current="page" to="/posts" style={{
+                <Link  className="bi bi-postcard-heart-fill fs-2 text-decoration-none" aria-current="page" to="/" style={{
                   
                   color: 'white',
 
@@ -92,7 +92,7 @@ export default function Sidebar() {
               </li>
                            
               <li className="nav-item">
-                <Link className="bi bi-house-door-fill fs-2 text-decoration-none" aria-current="page" to="/"  style={{
+                <Link className="bi bi-house-door-fill fs-2 text-decoration-none" aria-current="page" to="/home"  style={{
                  
                   color: 'white',
                 }}> Home </Link>
