@@ -7,30 +7,28 @@ export default function NoteState(props) {
     
  
     const [posts, setPosts] = useState([]);
-    const defaultCategories = [
-        "Technology",
-        "Health & Wellness",
-        "Education & Learning",
-        "Lifestyle & Productivity",
-        "Entertainment & Pop Culture",
-        "General"
-      ];
+    const defaultCategories = {
+        "Technology": 1,
+        "Health & Wellness": 1,
+        "Education & Learning": 1,
+        "Lifestyle & Productivity": 1,
+        "Entertainment & Pop Culture": 1,
+        "General": 1
+      };
     
 
     //something  
    
     const getpost = async (page = 1, reset = false) => {
         try {
-            const categoryData = JSON.parse(localStorage.getItem("categoryEngagement")) || {};
-            const categoriesToUse = Object.keys(categoryData).length ? 
-                Object.entries(categoryData)
-                .sort(([, a], [, b]) => b - a)
-                .map(([category]) => category)
-            : defaultCategories;
-            let totalEngagement = Object.values(categoryData).reduce((sum, count) => sum + count, 0) || 1;
+            const categoryData = JSON.parse(localStorage.getItem("categoryEngagement")) || defaultCategories;
+            const sortedCategories = Object.entries(categoryData)
+            .sort(([, a], [, b]) => b - a)
+            .map(([category]) => category);
+            const totalEngagement = Object.values(categoryData).reduce((sum, count) => sum + count, 0) ||1;
             let allPosts = [];
 
-            for (const category of categoriesToUse) {
+            for (const category of sortedCategories) {
                 let categoryLimit = categoryData[category]
                   ? Math.round((categoryData[category] / totalEngagement) * 10)
                   : 1;
