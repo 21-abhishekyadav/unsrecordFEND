@@ -31,8 +31,7 @@ export default function NoteState(props) {
             let allPosts = [];
 
             for (const category of categoriesToUse) {
-                let categoryLimit = categoryData[category]
-                  ? Math.round((categoryData[category] / totalEngagement) * 10)
+                let categoryLimit = categoryData[category] ? Math.round((categoryData[category] /totalEngagement) * 10)
                   : 1;
               
                 const response = await fetch(`${host}/posts?page=${page}&limit=${categoryLimit}&category=${encodeURIComponent(category)}`, {
