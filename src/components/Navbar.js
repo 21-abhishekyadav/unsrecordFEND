@@ -25,7 +25,7 @@ const reset = () => {
       "General"
     ];
     defaultCategories.forEach(category => {
-      resetData[category] = 1;
+      resetData[category] = 0;
     });
   }
 
