@@ -11,7 +11,7 @@ const reset = () => {
   // Reset all values to 0
   const resetData = {};
   for (const category in categoryData) {
-    resetData[category] = 1;
+    resetData[category] = 0;
   }
 
   // If no data existed before, initialize defaults
@@ -30,6 +30,7 @@ const reset = () => {
   }
 
   localStorage.setItem("categoryEngagement", JSON.stringify(resetData));
+  alert("done");
 };
 
 
