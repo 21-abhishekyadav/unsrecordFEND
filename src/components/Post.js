@@ -15,7 +15,10 @@ export default function Posts() {
     const fetchInitialPosts = async () => {
       console.log("fetching");
       setLoading(true);
-      await getpost(1, true);  // Reset posts for initial load
+
+      await new Promise(resolve => setTimeout(resolve, 0));
+      await getpost(1, true).then(() => console.log("getpost resolved"));
+
       console.log("fetched");
       setLoading(false);
       setInitialLoad(false);
